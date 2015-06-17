@@ -1,0 +1,21 @@
+<div class='pop-style' ng-show="dataset.show || false">
+    <div class='Modal-Background-Gray'></div>
+    <div>
+        <div class='pop-header'>
+            <div class='pop-back' ng-click='cancel()'></div>
+            <div class='pop-title'>{{dataset.title || '文本框'}}</div>
+            <div class='pop-right-text' ng-click="confirm()">{{dataset.rtitle || '确定'}}</div>
+        </div>
+        <div class='common-text-area'>
+            <textarea
+                ng-model="dataset.value"
+                placeholder="{{dataset.placeholder || '请输入……'}}"
+                name="{{dataset.name || ''}}"
+                ng-minlength="{{dataset.minlength || 0}}"
+                ng-maxlength="{{dataset.maxlength || 99999}}"
+                ng-required="{{dataset.required || false}}"
+                ng-trim="{{dataset.trim || false}}">
+            </textarea>
+        </div>
+    </div>
+</div>

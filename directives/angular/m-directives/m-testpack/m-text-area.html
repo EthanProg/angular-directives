@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="Test">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- web 组件样式库 webComponents.css -->
+    <link rel="stylesheet" type="text/css" href="../../../css/webComponents.css">
+    <script src="../../angular.min.js"></script>
+    <!-- m-config.js 用于指定使用页面到模板 m-template 的相对路径 -->
+    <script src="../m-config.js"></script>
+    <!-- m-directives.js 为web组件指令库 -->
+    <script src="../m-directives.js"></script>
+    <script>
+        // 调用phonegap返回键产生的回调方法
+        // 用于消失弹出框
+        // 非客户端应用请忽略此方法
+        var webComBack;
+        // 测试文本框
+        // 依赖于mobileDirceticves模块
+        angular.module('Test', ['mobileDirceticves'])
+            .controller('myCtrl', function ($scope) {
+                // 弹出文本框参数说明：
+                // 用于绑定到 m-text-area 的 dataset 属性
+                $scope.textArea = {
+                    value: '123123',// required - text area 的value值，必须显示声明！！！
+                    show: false,// optimal - 是否直接显示文本框，默认为false
+                    title: '',// optimal - 弹出文本框中间title, 默认为‘文本框'
+                    rtitle: '',// optimal - 弹出文本框右侧title, 默认为‘确定'
+                    name: 'textArea',// optimal - text area 的name属性值，默认为空。
+                    placeholder: '请输入留言...',// optimal - text area placeholder 属性，默认为’请输入...'
+                    required: true,// optimal - text area 是否必填 属性, 默认为false
+                    minlength: 5,// optimal - text area 填入的最小长度， 默认为0
+                    maxlength: 30,// optimal - text area 填入的最大长度， 默认为99999
+                    trim: true // optimal - text area 是否trim输入值，默认为false
+                };
+                // 文本框取消按钮回调方法
+                // 用于绑定到 m-text-area 的 cancel 属性
+                $scope.cancelFun = function () {
+                    $scope.textArea.show = false;
+//                    document.removeEventListener("backbutton", webComBack, false);
+//                    document.addEventListener("backbutton", onBackKeyDown, false);
+                };
+                // 本文框确定按钮回调方法
+                // 用于绑定到 m-text-area 的 confirm 属性
+                $scope.confirmFun = function () {
+                    $scope.textArea.show = false;
+                    alert("confirm value = " + $scope.textArea.value);
+//                    document.removeEventListener("backbutton", webComBack, false);
+//                    document.addEventListener("backbutton", onBackKeyDown, false);
+                };
+                // 页面
+                $scope.show = function () {
+                    $scope.textArea.show = true;
+                    console.log($scope.textArea.show );
+//                    document.removeEventListener("backbutton", onBackKeyDown, false);
+//                    document.addEventListener("backbutton", webComBack, false);
+                };
+                // 调用物理返回键产生的关闭弹出框回调方法
+//                webComBack = function () {
+//                    $scope.$apply(function () {
+//                        $scope.textArea.show = false;
+//                    });
+//                };
+            });
+    </script>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="show()">show text area</button>
+    <!-- 测试文本框 -->
+    <!-- dataset 属性 为text area所需的参数对象 -->
+    <!-- cancle 属性 绑定取消动作执行的方法 -->
+    <!-- confirm 属性 绑定确定动作执行的方法 -->
+    <m-text-area dataset="textArea" cancel="cancelFun()" confirm="confirmFun()"></m-text-area>
+<style>
+    .ng-invalid-required {
+        background-color: gainsboro;
+    }
+
+    .ng-invalid-maxlength {
+        background-color: blue;
+    }
+
+    .ng-invalid-minlength {
+        background-color: #ffff00;
+    }
+
+    .ng-valid {
+        background-color: #ffffff;
+    }
+</style>
+</body>
+</html>
